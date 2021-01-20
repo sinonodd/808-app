@@ -1,7 +1,7 @@
 <template>
   <div class="signup col-md-4 p-4">
     <form @submit.prevent="signup">
-      <h1 class="mb-5">Join us at cyber community</h1>
+      <h1 class="mb-5">Join us and stay tooned to get the latest feedback</h1>
       <div v-if="errorMessage" class="alert alert-danger" role="alert">
       {{ errorMessage }}
     </div>

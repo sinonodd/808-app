@@ -5,8 +5,9 @@ const helmet = require('helmet');
 const auth = require('./auth');
 const cors = require('cors');
 const middlewares = require('./auth/middlewares');
-const notes = require('./api/notes');
+const demos = require('./api/demos');
 const users = require('./api/users');
+const beats = require('./api/beats');
 
 app.use(volleyball);
 app.use(helmet());
@@ -20,11 +21,10 @@ app.get('/', (req,res) => {
         user: req.user
     });
 });
-
 app.use('/auth', auth);
 app.use('/api/v1/users', middlewares.isLoggedIn, middlewares.isAdmin, users);
-app.use('/api/v1/notes', middlewares.isLoggedIn, notes);
-
+app.use('/api/v1/beats', middlewares.isLoggedIn, middlewares.isAdmin, beats);
+app.use('/api/v1/demos', demos);
 function notFound(req,res,next) {
     res.status(404);
     const error = new Error('not Found', req.originUrl);

@@ -59,10 +59,11 @@ router.post('/login', (req,res,next) => {
     if (result.error === undefined) {
         users.findOne({ username: req.body.username })
         .then(user => {
-            if (user && user.avtive) {
+            if (user) {
                 bcrypt
                     .compare(req.body.password, user.password)
                     .then((result) => {
+                        console.log(result);
                         if (result) {
                             const payload = {
                                 username: user.username,
@@ -74,6 +75,7 @@ router.post('/login', (req,res,next) => {
                             expiresIn: '1d'
                             },
                             (err,token) => {
+                                console.log(token);
                                 if (err) {Error422(res,next);}
                                 else { res.json(token); }
                             });

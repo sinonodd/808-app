@@ -9,19 +9,19 @@
   </div>
   <div class="row">
     <div class="col-md-4 p-4">
-      <h1 class="mb-5">My note</h1>
+      <h1 class="mb-5">My songs</h1>
       <form @submit.prevent="createNote()">
         <div class="form-group text-left">
           <input
-            v-model="note.title"
+            v-model="demo.title"
             type="title"
             class="form-control"
-            id="note-title"
-            placeholder="note title" required>
+            id="demo-title"
+            placeholder="demo title" required>
         </div>
         <div class="form-group text-left">
           <textarea
-            v-model="note.content"
+            v-model="demo.discreption"
             class="form-control"
             id="exampleTextarea"
             rows="3">
@@ -34,12 +34,12 @@
         </button>
       </form>
     </div>
-    <div v-for="note in notes"
+    <div v-for="demo in demos"
         class="col-md-4 p-4 my-4 card"
-        :key="note._id">
+        :key="demo._id">
       <div class="card-body">
-        <h4 class="card-title">{{note.title}}</h4>
-        <p class="card-text" v-html="renderMarkDown(note.content)"></p>
+        <h4 class="card-title">{{demo.title}}</h4>
+        <p class="card-text" v-html="renderMarkDown(demo.discreption)"></p>
       </div>
     </div>
   </div>
@@ -56,10 +56,12 @@ const API_URL = 'http://localhost:5000/';
 export default {
   data: () => ({
     user: null,
-    notes: [],
-    note: {
+    demos: [],
+    demo: {
       title: '',
-      content: '',
+      discreption: '',
+      image: '',
+      price: '',
     },
   }),
   mounted() {
@@ -79,34 +81,34 @@ export default {
     });
   },
   methods: {
-    renderMarkDown(note) {
-      return md.render(note);
+    renderMarkDown(demo) {
+      return md.render(demo);
     },
     getNotes() {
-      fetch(`${API_URL}api/v1/notes`, {
+      fetch(`${API_URL}api/v1/demos`, {
         headers: {
           authorization: `Bearer ${localStorage.token}`,
         },
       }).then((res) => {
-        res.json().then((notes) => {
-          this.notes = notes;
-          console.log(this.notes);
+        res.json().then((demos) => {
+          this.demos = demos;
+          console.log(this.demos);
         });
       });
     },
     createNote() {
-      if (this.note) {
-        fetch(`${API_URL}api/v1/notes`, {
+      if (this.demo) {
+        fetch(`${API_URL}api/v1/demos`, {
           method: 'POST',
-          body: JSON.stringify(this.note),
+          body: JSON.stringify(this.demo),
           headers: {
             'content-type': 'application/json',
             authorization: `Bearer ${localStorage.token}`,
           },
         }).then((res) => {
-          res.json().then((note) => {
-            console.log(note);
-            this.notes.push(note);
+          res.json().then((demo) => {
+            console.log(demo);
+            this.songs.push(demo);
           });
         });
       }

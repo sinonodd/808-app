@@ -5,11 +5,12 @@ const bcrypt = require('bcryptjs');
 
 async function createAdminUser() {
     const user = await users.findOne({role: 'admin'});
+    console.log(user);
     try {
         if (!user) {
             await users.insert({
-                username: 'master',
-                password: await bcrypt.hash(process.env.DEFAULT_ADMIN_PASSWORD, 12),
+                username: 'smo',
+                password: await bcrypt.hash(process.env.DEFUALT_ADMIN_PASSWORD, 12),
                 role: 'admin',
                 active: true
             });

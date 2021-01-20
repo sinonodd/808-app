@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db/connection');
 const users = db.get('users');
+const demos = db.get('demos');
 const Joi = require('joi');
 const bcrypt = require('bcryptjs');
 
@@ -17,16 +18,6 @@ const schema = Joi.object({
     active: Joi.bool(),
 
     });
-/*
- router.get('/', async (req,res) => {
-    try {
-        const result = await users.find({}, '-password');
-        res.json(result);
-    }
-    catch { next(error); }
- });
-*/
-
 
 router.get('/',async (req,res,next) => {
     try {
@@ -63,5 +54,6 @@ router.patch('/:id', async (req,res,next) => {
     } catch (error) {
         next(error);
     }
+
 });
 module.exports = router;
